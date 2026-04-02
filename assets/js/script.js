@@ -14,14 +14,14 @@ class Tarea {
 
 // 2. Crear clase GestorTareas
 class GestorTareas {
-    #tareas = []; // propiedad privada! No es accesible fuera de la clase
+    #tareas = []; // propiedad privada! No es accesible fuera de la class
 
     agregarTarea(tarea) {
         this.#tareas.push(tarea);
     }
 
     eliminarTarea(id) {
-    // Todo: Validar que id exista
+    // To do: Validar que id exista
         let tareaEncontrada = this.#buscarTarea(id);
         if (!tareaEncontrada) {
             console.log('Tarea no encontrada');
@@ -46,7 +46,7 @@ class GestorTareas {
             return;
     }
 
-    // Si es que encontró la tarea...↓
+    // Si es que encontró la tarea:
     tareaEncontrada.cambiarEstado();
 }
 
@@ -73,21 +73,3 @@ console.log(gestorTareas.listarTareas());
 
 // Modificar tarea que no existe
 gestorTareas.cambiarEstado(56);
-
-// Uso de Objeto Date
-const date = new Date();
-const [month, day, year, hours, minutes, seconds] = [
-    date.getMonth(),
-    date.getDate(),
-    date.getFullYear(),
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-];
-// Enero es el mes 0
-console.log(`${day}/${month + 1}/${year} - ${hours}:${minutes}:${seconds}`);
-
-// Encontrar fecha y hora en formato local
-console.log(new Date().toLocaleString('es-CL'));
-console.log(new Date().toLocaleString('en-US'));
-console.log(new Date().toLocaleString('en-UK'));
