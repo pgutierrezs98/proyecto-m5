@@ -1,75 +1,65 @@
-// 1. Crear clase Tarea
+// Creas clase Tarea con propiedades ID, descripcion, estado y fechaCreacion
 class Tarea {
-    constructor(id, descripcion, estado, fechaCreacion) {
-        this.id = id; // numero o string
-        this.descripcion = descripcion; // string
-        this.estado = estado; // booleano
-        this.fechaCreacion = fechaCreacion; // string
+    constructor(id, descripcion, estado, fechaCreacion){
+        this.id = id;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
     }
 
-    cambiarEstado() {
-        this.estado = !this.estado;
+    cambiarEstado = () =>{
+        this.estado = !this.estado
     }
 }
 
-// 2. Crear clase GestorTareas
+// Crear clase GestorTareas que administre tareas
 class GestorTareas {
-    #tareas = []; // propiedad privada! No es accesible fuera de la class
-
-    agregarTarea(tarea) {
-        this.#tareas.push(tarea);
+    constructor(){
+        this.tareas = []
     }
 
-    eliminarTarea(id) {
-    // To do: Validar que id exista
-        let tareaEncontrada = this.#buscarTarea(id);
-        if (!tareaEncontrada) {
-            console.log('Tarea no encontrada');
-            return;
+    // CRUD -> Create, Read, Update, Delete
+    agregarTarea = (tarea) =>{
+        this.tareas.push(tarea)
     }
-    // Filtrar un array: solo dejará los elementos cuyo id sea distinto al id pasado como argumento
-    this.#tareas = this.#tareas.filter((tarea) => tarea.id !== id);
-
-    // Opción 2: ocupar splice
-    // const foundIndex = this.#tareas.findIndex((tarea) => tarea.id === id); // si es que no existe devuelve -1
-    // this.#tareas.splice(foundIndex, 1)
+    eliminarTarea = (id) =>{
+        this.tareas = this.tareas.filter(tarea => tarea.id !== id)
+        console.log(`Tarea con ID ${id} eliminada exitosamente.`)
     }
-
-    #buscarTarea(id) {
-        return this.#tareas.find((tarea) => tarea.id === id);
+    listarTareas = () =>{
+        return this.tareas
     }
-
-    cambiarEstado(id) {
-        let tareaEncontrada = this.#buscarTarea(id);
-        if (!tareaEncontrada) {
-            console.log('Tarea no encontrada');
-            return;
+    #buscarTarea = (id) =>{
+        return this.tareas.find(tarea => tarea.id === id)
     }
-
-    // Si es que encontró la tarea:
-    tareaEncontrada.cambiarEstado();
-}
-
-    listarTareas() {
-        return this.#tareas;
+    cambiarEstado = (id) =>{
+        let tarea = this.#buscarTarea(id)
+        if(!tarea){
+            console.error('No se pudo actualizar: Tarea no encontrada.')
+            return 'No se pudo actualizar: Tarea no encontrada.'
+        }
+        tarea.cambiarEstado()
+        console.log(`Tarea con ID ${id} actualizada exitosamente.`)
     }
 }
 
-const gestorTareas = new GestorTareas();
-gestorTareas.agregarTarea(new Tarea(1, 'Tarea 1', true, new Date()));
-gestorTareas.agregarTarea(new Tarea(2, 'Tarea 2', false, new Date()));
+// Crear instancia de GestorTareas y Tareas
+const gestorTareas = new GestorTareas()
+//Agregar tareas
+gestorTareas.agregarTarea(new Tarea(1, 'Tarea 1', true, new Date()))
+gestorTareas.agregarTarea(new Tarea(2, 'Tarea 2', true, new Date()))
+gestorTareas.agregarTarea(new Tarea(3, 'Tarea 3', false, new Date()))
 
-// Mostrar todas las tareas
-console.log(gestorTareas.listarTareas());
+//Mostrar todas las tareas
+console.log(gestorTareas.listarTareas())
 
-// Cambiar el estado de una tarea
-gestorTareas.cambiarEstado(1);
-console.log(gestorTareas.listarTareas());
+// Cambiar estado de una tarea
+gestorTareas.cambiarEstado(1)
+console.log(gestorTareas.listarTareas())
 
 // Eliminar una tarea
-gestorTareas.eliminarTarea(1);
-console.log('Despues de eliminar tarea con id 1');
-console.log(gestorTareas.listarTareas());
+gestorTareas.eliminarTarea(1)
+console.log(gestorTareas.listarTareas())
 
-// Modificar tarea que no existe
-gestorTareas.cambiarEstado(56);
+//Probar error de búsqueda de tarea
+gestorTareas.cambiarEstado(56)
